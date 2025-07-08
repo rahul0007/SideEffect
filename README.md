@@ -150,24 +150,34 @@ fun SideEffectExample() {
  #### Example
 
 ```kotlin
- @Composable
-fun BroadcastReceiverExample(context: Context) {
-    DisposableEffect(Unit) {
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                println("🔴 Broadcast received!")
-            }
-        }
-        val filter = IntentFilter("MY_CUSTOM_ACTION")
-        context.registerReceiver(receiver, filter)
+@Composable
+fun NetworkObserverScreen() {
+    var networkType by remember { mutableStateOf(NetworkType.NONE) }
 
+    DisposableEffect(Unit) {
+        val cleanup = startNetworkObserver { type ->
+            networkType = type
+        }
         onDispose {
-            context.unregisterReceiver(receiver)
-            println("⚫ Receiver unregistered")
+            println("onDispose")
+            cleanup()
         }
     }
 
-    Text("Waiting for broadcast...")
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(
+            text = when (networkType) {
+                NetworkType.WIFI -> " Connected to Wi-Fi"
+                NetworkType.CELLULAR -> " Using Mobile Data"
+                NetworkType.NONE -> " No Internet Connection"
+            },
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
 }
 ```
 
