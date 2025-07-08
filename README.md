@@ -187,7 +187,67 @@ fun NetworkObserverScreen() {
 -  Managing resources that need cleanup (camera, GPS, sensors).
 -  Observing external APIs that are not Compose-aware.
 ---
+
+### 🧠 What is produceState?
+---
+
+✅ produceState is used to create a Compose State object whose value is produced asynchronously in a coroutine.
+
+- It starts a coroutine inside Compose to compute a value.
+
+- The result of the coroutine is automatically observed and recomposed in your UI.
+
+- The coroutine gets cancelled automatically when the Composable leaves composition.
+
+#### ⚡ Signature
+
+```kotlin
+  @Composable
+fun <T> produceState(
+    initialValue: T,
+    key1: Any? = null,
+    block: suspend ProduceStateScope<T>.() -> Unit
+): State<T>
+
 ```
+
+#### 📌 Key Features:
+
+- You get a State<T> to observe in Compose.
+- block runs in a coroutine (can call suspend functions).
+- When key1 changes, the coroutine is restarted.
+
+#### 🚀 Basic Example
+
+```kotlin
+@Composable
+fun ProduceStateExample() {
+    val countState by produceState(initialValue = 0) {
+        // Coroutine in Compose
+        repeat(5) { i ->
+            delay(1000) // Simulate work
+            value = i + 1 // Update Compose state
+        }
+    }
+
+    Text("Count: $countState")
+}
+
+```
+
+✅ This will display:
+```kotlin
+
+Count: 1
+Count: 2
+Count: 3
+Count: 4
+Count: 5
+
+```
+
+✅ The UI automatically recomposes each time value changes.
+
 📌 Best Practices
 ✅ Use LaunchedEffect for one-time coroutines like API calls.
 ✅ Use SideEffect sparingly; avoid doing heavy work there.
@@ -195,18 +255,8 @@ fun NetworkObserverScreen() {
 ✅ Avoid launching infinite loops in rememberCoroutineScope – prefer LaunchedEffect.
 ✅ Combine rememberUpdatedState with LaunchedEffect for closures.
 ```
-```text
-## 📜 Example Logs
-When you click the button:
-🟢 SideEffect: After recomposition. Count=1
-🟣 LaunchedEffect: Count=1 (starting work)
-🔵 rememberCoroutineScope: Coroutine started for count=1
-🟣 LaunchedEffect: Count=1 (work done)
-✅ rememberUpdatedState: Handling click #1
----
-When you navigate away:
 
-🟠 DisposableEffect: Cleaned up resource
+
 
 
 
