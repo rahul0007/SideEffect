@@ -32,9 +32,6 @@ A side effect is any action in Compose that happens outside the normal UI render
 | `DisposableEffect`           | On enter/leave or key change | ✅ Yes          | Manage lifecycle resources                   |
 | `produceState`               | On enter/key change          | ✅ Yes          | Async state production                       |
 | `rememberCoroutineScope`     | Once per Composition         | ✅ Yes          | User-triggered coroutines                    |
-| `rememberUpdatedState`       | Every recomposition          | ✅ Yes          | Capture latest lambda/value in closures      |
-| `rememberInfiniteTransition` | Continuous                   | ✅ Yes          | Infinite animations                          |
-
 
 ---
 
