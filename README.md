@@ -247,18 +247,13 @@ Count: 5
 ```
 
 ✅ The UI automatically recomposes each time value changes.
-
+---
 📌 Best Practices
 ✅ Use LaunchedEffect for one-time coroutines like API calls.
 ✅ Use SideEffect sparingly; avoid doing heavy work there.
 ✅ Use DisposableEffect to manage resources properly.
 ✅ Avoid launching infinite loops in rememberCoroutineScope – prefer LaunchedEffect.
 ✅ Combine rememberUpdatedState with LaunchedEffect for closures.
-```
-
-
-
-
 
 ---
 
