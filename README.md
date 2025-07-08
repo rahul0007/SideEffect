@@ -15,7 +15,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Ser
 * `/shared` is for the code that will be shared between all targets in the project.
   The most important subfolder is `commonMain`. If preferred, you can add code to the platform-specific folders here too.
 
-
+---
 
 # 📝 What are Side-Effects in Compose?
 
@@ -25,24 +25,8 @@ Side effects, such as updating a database or making a network call, should be ke
 
 Jetpack Compose provides several Composable functions, such as `SideEffect`, `LaunchedEffect,` and` DisposableEffect,` that enable developers to manage side effects effectively, by decoupling them from the UI rendering logic and executing them in a separate coroutine scope.
 
-This module demonstrates **all major side effect APIs in Jetpack Compose** with examples. It is compatible with **Kotlin Multiplatform (Android/iOS)**.
-
 ---
 
-
-
-
-## ✨ What Are Side Effects?
-
-In Compose, **side effects** let you interact with the *outside world* in a way that doesn’t interfere with Compose’s declarative UI system.
-
-✅ Use side effects for:
-- Network calls
-- Logging
-- Showing Toasts
-- Managing external resources
-
----
 
 ## 🛠 Types of Side Effects
 
