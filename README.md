@@ -19,11 +19,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Ser
 
 # 📝 What are Side-Effects in Compose?
 
-The purpose of side effects in Jetpack Compose is to allow for the execution of non-UI related operations that change the state of the app outside of a Composable function in a controlled and predictable manner.
-
-Side effects, such as updating a database or making a network call, should be kept separate from the UI rendering logic to improve the performance and maintainability of the code.
-
-Jetpack Compose provides several Composable functions, such as `SideEffect`, `LaunchedEffect,` and` DisposableEffect,` that enable developers to manage side effects effectively, by decoupling them from the UI rendering logic and executing them in a separate coroutine scope.
+A side effect is any action in Compose that happens outside the normal UI rendering, such as showing a toast, launching a coroutine, or reading from shared preferences.
 
 ---
 
