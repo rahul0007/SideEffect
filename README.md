@@ -37,6 +37,14 @@ A side effect is any action in Compose that happens outside the normal UI render
 
 
 ---
+```
+📌 Best Practices
+✅ Use LaunchedEffect for one-time coroutines like API calls.
+✅ Use SideEffect sparingly; avoid doing heavy work there.
+✅ Use DisposableEffect to manage resources properly.
+✅ Avoid launching infinite loops in rememberCoroutineScope – prefer LaunchedEffect.
+✅ Combine rememberUpdatedState with LaunchedEffect for closures.
+```
 ```text
 ## 📜 Example Logs
 When you click the button:
