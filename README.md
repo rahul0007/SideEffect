@@ -40,16 +40,12 @@ A side effect is any action in Compose that happens outside the normal UI render
 ```text
 ## 📜 Example Logs
 When you click the button:
-
 🟢 SideEffect: After recomposition. Count=1
 🟣 LaunchedEffect: Count=1 (starting work)
 🔵 rememberCoroutineScope: Coroutine started for count=1
 🟣 LaunchedEffect: Count=1 (work done)
 ✅ rememberUpdatedState: Handling click #1
-
 ---
-
-
 When you navigate away:
 
 🟠 DisposableEffect: Cleaned up resource
