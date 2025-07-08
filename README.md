@@ -37,6 +37,40 @@ A side effect is any action in Compose that happens outside the normal UI render
 
 
 ---
+
+### ✅ 1. `LaunchedEffect`
+
+#### 📖 **Definition**
+
+- Launches a coroutine that is **tied to the Composition** lifecycle.
+- Automatically cancels and restarts if the key changes.
+- Ideal for **starting asynchronous work** when a Composable enters composition.
+
+#### 🗓 **When it runs**
+
+- When the Composable first enters Composition.
+- When the provided **key(s)** change.
+
+#### 📝 **Example**
+
+```kotlin
+LaunchedEffect(userId) {
+    val user = repository.fetchUser(userId)
+    println("Fetched user: $user")
+}
+```
+
+✅ 2. SideEffect
+📖 Definition
+Runs after every successful recomposition.
+
+Used for non-suspending logic that needs to sync with external code.
+
+🗓 When it runs
+Every time Compose recomposes.
+
+📝 Example
+
 ```
 📌 Best Practices
 ✅ Use LaunchedEffect for one-time coroutines like API calls.
