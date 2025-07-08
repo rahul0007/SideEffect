@@ -35,11 +35,10 @@ A side effect is any action in Compose that happens outside the normal UI render
 
 ---
 
-### ✅ 1. `LaunchedEffect`
-
-#### 📖 **Definition**
-
-- Launches a coroutine that is **tied to the Composition** lifecycle.
+### 📝 What is LaunchedEffect?
+- LaunchedEffect is a side-effect API in Compose.
+- It launches a coroutine tied to the composition lifecycle.
+- It runs when keys change or on initial composition, and it cancels automatically if the composable leaves the composition.
 - Automatically cancels and restarts if the key changes.
 - Ideal for **starting asynchronous work** when a Composable enters composition.
 
@@ -51,22 +50,132 @@ A side effect is any action in Compose that happens outside the normal UI render
 #### 📝 **Example**
 
 ```kotlin
-LaunchedEffect(userId) {
-    val user = repository.fetchUser(userId)
-    println("Fetched user: $user")
+@Composable
+fun CounterExample() {
+    var counter by remember { mutableStateOf(0) }
+
+    // Runs every time counter changes
+    LaunchedEffect(counter) {
+        println("LaunchedEffect: Counter changed to $counter")
+        delay(1000)
+        println("Finished delay for counter=$counter")
+    }
+
+    Column {
+        Text("Counter: $counter")
+        Button(onClick = { counter++ }) {
+            Text("Increment Counter")
+        }
+    }
+}
+```
+- Every time you click Increment Counter, LaunchedEffect cancels the previous coroutine and starts a new one because the counter key changed.
+
+  #### 🔥 What happens if key changes?
+  If the key changes:
+  1) Cancel the old coroutine.
+  2) Start a new coroutine.
+
+| Feature                        | LaunchedEffect  | rememberCoroutineScope       |
+| ------------------------------ | --------------- | ---------------------------- |
+| Tied to composition            | ✅ Yes          | ❌ No                       |
+| Cancels when composable exits  | ✅ Yes          | ❌ No (you cancel manually) |
+| Starts coroutine automatically | ✅ Yes          | ❌ You call launch manually |
+| Key-based restart              | ✅ Yes          | ❌ No                       |
+
+  
+####  2.  What is SideEffect?
+
+
+- SideEffect is a Compose effect that allows you to perform synchronous actions after every successful recomposition.
+
+- Unlike LaunchedEffect, it does not launch a coroutine.
+
+- It’s used for non-suspending, one-time actions like updating values in a remember block, or notifying external APIs.
+
+📝 Example
+```kotlin
+@Composable
+fun SideEffectExample() {
+    var counter by remember { mutableStateOf(0) }
+
+    // SideEffect runs after every recomposition
+    SideEffect {
+        println("🟣 SideEffect: Counter is $counter")
+    }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Counter: $counter", style = MaterialTheme.typography.titleLarge)
+        Button(onClick = { counter++ }) {
+            Text("Increment")
+        }
+    }
+}
+```
+ - Every time you click Increment, the UI recomposes and SideEffect is called.
+
+ #### 🧠 When to use SideEffect?
+
+ ✅ When you need to:
+
+- Notify external APIs or SDKs of a state change.
+
+- Update values that are not part of Compose state.
+
+- Call methods that require recomposition to finish.
+
+
+
+#### 🟣 Difference: SideEffect vs LaunchedEffect
+
+| Feature              | **SideEffect**            | **LaunchedEffect**                      |
+| -------------------- | ------------------------- | --------------------------------------- |
+| When it runs         | After every recomposition | When the **key changes** or composition |
+| Can suspend?         | ❌ No                     | ✅ Yes                                 |
+| Tied to coroutines?  | ❌ No                     | ✅ Yes (launches coroutine)            |
+| Cancels on disposal? | N/A                       | ✅ Cancels coroutine on disposal        |
+| Use case             | Synchronous side effects  | Asynchronous suspending tasks           |
+
+
+#### 🔴 What is DisposableEffect?
+
+- DisposableEffect is a side-effect API in Compose.
+
+- It’s used when you need to set up and clean up resources based on the lifecycle of a composable.
+
+- You provide keys (dependencies). When these keys change or the composable leaves the composition, cleanup happens automatically.
+
+ #### Example
+
+```kotlin
+ @Composable
+fun BroadcastReceiverExample(context: Context) {
+    DisposableEffect(Unit) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                println("🔴 Broadcast received!")
+            }
+        }
+        val filter = IntentFilter("MY_CUSTOM_ACTION")
+        context.registerReceiver(receiver, filter)
+
+        onDispose {
+            context.unregisterReceiver(receiver)
+            println("⚫ Receiver unregistered")
+        }
+    }
+
+    Text("Waiting for broadcast...")
 }
 ```
 
-✅ 2. SideEffect
-📖 Definition
-Runs after every successful recomposition.
+### ✅ Key Use Cases
 
-Used for non-suspending logic that needs to sync with external code.
-
-🗓 When it runs
-Every time Compose recomposes.
-
-📝 Example
+✔ Registering/unregistering listeners (like BroadcastReceiver, LifecycleObserver).
+✔ Managing resources that need cleanup (camera, GPS, sensors).
+✔ Observing external APIs that are not Compose-aware.
 
 ```
 📌 Best Practices
