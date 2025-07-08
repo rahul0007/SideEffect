@@ -15,12 +15,56 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Ser
 * `/shared` is for the code that will be shared between all targets in the project.
   The most important subfolder is `commonMain`. If preferred, you can add code to the platform-specific folders here too.
 
+# 🚀 Jetpack Compose: Side Effects Demo
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+This module demonstrates **all major side effect APIs in Jetpack Compose** with examples. It is compatible with **Kotlin Multiplatform (Android/iOS)**.
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+---
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+
+
+
+## ✨ What Are Side Effects?
+
+In Compose, **side effects** let you interact with the *outside world* in a way that doesn’t interfere with Compose’s declarative UI system.
+
+✅ Use side effects for:
+- Network calls
+- Logging
+- Showing Toasts
+- Managing external resources
+
+---
+
+## 🛠 Types of Side Effects
+
+| Effect                     | When It Runs                                      | Common Use Case                     |
+|----------------------------|----------------------------------------------------|---------------------------------------|
+| **LaunchedEffect**         | On key change or initial composition              | Start coroutine tied to lifecycle    |
+| **SideEffect**             | After every successful recomposition & commit     | Sync external state (e.g., analytics)|
+| **DisposableEffect**       | On enter/exit of the Composable                   | Setup & cleanup resources            |
+| **rememberCoroutineScope** | Coroutine scope for user-triggered actions        | Button click APIs, animations        |
+| **rememberUpdatedState**   | Always gives latest value in long-lived effects   | Avoid stale callbacks                |
+
+---
+
+## 📜 Example Logs
+When you click the button:
+
+🟢 SideEffect: After recomposition. Count=1
+🟣 LaunchedEffect: Count=1 (starting work)
+🔵 rememberCoroutineScope: Coroutine started for count=1
+🟣 LaunchedEffect: Count=1 (work done)
+✅ rememberUpdatedState: Handling click #1
+
+---
+
+
+When you navigate away:
+
+🟠 DisposableEffect: Cleaned up resource
+
+
+
+---
+
