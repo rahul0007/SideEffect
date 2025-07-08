@@ -245,9 +245,9 @@ Count: 4
 Count: 5
 
 ```
-
-✅ The UI automatically recomposes each time value changes.
 ---
+✅ The UI automatically recomposes each time value changes.
+
 
 📌 Best Practices
 - ✅ Use LaunchedEffect for one-time coroutines like API calls.
