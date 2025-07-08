@@ -25,14 +25,16 @@ A side effect is any action in Compose that happens outside the normal UI render
 
 
 ## 🛠 Types of Side Effects
+| 🛠️ Effect                   | 🕒 Trigger                   | 🌱 Auto Cancel | 🎯 Purpose                                   |
+| ---------------------------- | ---------------------------- | --------------- | ---------------------------------------------|
+| `LaunchedEffect`             | On enter/key change          | ✅ Yes          | Start coroutines tied to Composition         |
+| `SideEffect`                 | After every recomposition    | ✅ Yes          | Non-suspending sync work after recomposition |
+| `DisposableEffect`           | On enter/leave or key change | ✅ Yes          | Manage lifecycle resources                   |
+| `produceState`               | On enter/key change          | ✅ Yes          | Async state production                       |
+| `rememberCoroutineScope`     | Once per Composition         | ✅ Yes          | User-triggered coroutines                    |
+| `rememberUpdatedState`       | Every recomposition          | ✅ Yes          | Capture latest lambda/value in closures      |
+| `rememberInfiniteTransition` | Continuous                   | ✅ Yes          | Infinite animations                          |
 
-| Effect                     | When It Runs                                      | Common Use Case                     |
-|----------------------------|----------------------------------------------------|---------------------------------------|
-| **LaunchedEffect**         | On key change or initial composition              | Start coroutine tied to lifecycle    |
-| **SideEffect**             | After every successful recomposition & commit     | Sync external state (e.g., analytics)|
-| **DisposableEffect**       | On enter/exit of the Composable                   | Setup & cleanup resources            |
-| **rememberCoroutineScope** | Coroutine scope for user-triggered actions        | Button click APIs, animations        |
-| **rememberUpdatedState**   | Always gives latest value in long-lived effects   | Avoid stale callbacks                |
 
 ---
 
