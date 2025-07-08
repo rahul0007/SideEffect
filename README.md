@@ -172,11 +172,11 @@ fun BroadcastReceiverExample(context: Context) {
 ```
 
 ### ✅ Key Use Cases
-
+---
 -✔ Registering/unregistering listeners (like BroadcastReceiver, LifecycleObserver).
 -✔ Managing resources that need cleanup (camera, GPS, sensors).
 -✔ Observing external APIs that are not Compose-aware.
-
+---
 ```
 📌 Best Practices
 ✅ Use LaunchedEffect for one-time coroutines like API calls.
