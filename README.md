@@ -37,7 +37,7 @@ A side effect is any action in Compose that happens outside the normal UI render
 
 
 ---
-
+```text
 ## 📜 Example Logs
 When you click the button:
 
