@@ -262,8 +262,8 @@ Count: 5
 ---
 ✅ The UI automatically recomposes each time value changes.
 
-### 5rememberCoroutineScope
-
+### 5 rememberCoroutineScope
+---
 👉 Gives you a CoroutineScope tied to the Composable lifecycle.
 
 - Unlike LaunchedEffect, it doesn’t auto-run—you launch manually.
@@ -285,7 +285,7 @@ fun RememberCoroutineScopeExample() {
 ```
 
 - ✅ Best for: user-triggered coroutines (e.g., button clicks).
-
+---
 📌 Best Practices
 - ✅ Use LaunchedEffect for one-time coroutines like API calls.
 - ✅ Use SideEffect sparingly; avoid doing heavy work there.
