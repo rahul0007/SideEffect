@@ -49,7 +49,7 @@ Examples:
 
 ---
 
-### 📝 What is LaunchedEffect?
+### 📝 1 What is LaunchedEffect?
 - LaunchedEffect is a side-effect API in Compose.
 - It launches a coroutine tied to the composition lifecycle.
 - It runs when keys change or on initial composition, and it cancels automatically if the composable leaves the composition.
@@ -98,7 +98,7 @@ fun CounterExample() {
 | Key-based restart              | ✅ Yes          | ❌ No                       |
 
   
-####  2.  What is SideEffect?
+####  2. What is SideEffect?
 
 
 - SideEffect is a Compose effect that allows you to perform synchronous actions after every successful recomposition.
@@ -153,7 +153,7 @@ fun SideEffectExample() {
 | Use case             | Synchronous side effects  | Asynchronous suspending tasks           |
 
 
-#### 🔴 What is DisposableEffect?
+#### 3 What is DisposableEffect?
 
 - DisposableEffect is a side-effect API in Compose.
 
@@ -202,7 +202,7 @@ fun NetworkObserverScreen() {
 -  Observing external APIs that are not Compose-aware.
 ---
 
-### 🧠 What is produceState?
+### 4 What is produceState?
 ---
 
 ✅ produceState is used to create a Compose State object whose value is produced asynchronously in a coroutine.
@@ -262,6 +262,29 @@ Count: 5
 ---
 ✅ The UI automatically recomposes each time value changes.
 
+### 5rememberCoroutineScope
+
+👉 Gives you a CoroutineScope tied to the Composable lifecycle.
+
+- Unlike LaunchedEffect, it doesn’t auto-run—you launch manually.
+```kotlin
+ @Composable
+fun RememberCoroutineScopeExample() {
+    val scope = rememberCoroutineScope()
+
+    Button(onClick = {
+        scope.launch {
+            println("Coroutine launched from button click")
+            delay(1000)
+            println("Finished async task")
+        }
+    }) {
+        Text("Start Coroutine")
+    }
+}
+```
+
+- ✅ Best for: user-triggered coroutines (e.g., button clicks).
 
 📌 Best Practices
 - ✅ Use LaunchedEffect for one-time coroutines like API calls.
