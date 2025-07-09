@@ -19,9 +19,8 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Ser
 
 # 📝 What are Side-Effects in Compose?
 
-A side effect is any action in Compose that happens outside the normal UI rendering, such as showing a toast, launching a coroutine, or reading from shared preferences.
+A side effect is any action in your Composable that affects something outside the scope of Compose or needs to survive recomposition.
 
-A side effect in Compose is anything that modifies or depends on external state, or performs an action outside Compose’s UI tree.
 
 Examples:
 
