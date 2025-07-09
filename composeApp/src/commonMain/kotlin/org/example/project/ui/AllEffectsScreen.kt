@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.project.ui
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -36,7 +36,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AllEffectsScreen() {
-    // State for produceState & transitions
     var userName by remember { mutableStateOf<String?>(null) }
     val user by produceState(initialValue = null as String?, key1 = true) {
         delay(1000)
@@ -44,21 +43,17 @@ fun AllEffectsScreen() {
     }
     var clicks by remember { mutableStateOf(0) }
 
-    // rememberCoroutineScope for user-triggered effects
     val scope = rememberCoroutineScope()
 
-    // rememberUpdatedState example
     val latestClickHandler = rememberUpdatedState {
         println("Handled click #$clicks for user: $user")
     }
 
-    // DisposableEffect - simulate resource registration
     DisposableEffect(Unit) {
         println("Resource registered")
         onDispose { println(" Resource unregistered") }
     }
 
-    // SideEffect - runs after every recomposition
 
     SideEffect {
         println(" inside Recomposed, current userName=$userName, clicks=$clicks")
@@ -68,7 +63,6 @@ fun AllEffectsScreen() {
     println(" First Recomposed, current userName=$userName, clicks=$clicks")
 
 
-    // LaunchedEffect - run once on enter
     LaunchedEffect(user) {
         println("👋 Welcome, $user!")
         userName = user
